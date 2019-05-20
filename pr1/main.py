@@ -1,22 +1,8 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
-"""
-ZetCode PyQt5 tutorial
-
-In this example, we position two push
-buttons in the bottom-right corner
-of the window.
-
-Author: Jan Bodnar
-Website: zetcode.com
-Last edited: August 2017
-"""
 
 import sys
-from PyQt5.QtWidgets import (QWidget, QPushButton,
-                             QHBoxLayout, QVBoxLayout, QApplication)
-
+from PyQt5.QtWidgets import (QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QApplication, QLineEdit)
+import wykres
+import numpy as np
 
 class Example(QWidget):
 
@@ -26,21 +12,82 @@ class Example(QWidget):
         self.initUI()
 
     def initUI(self):
-        wykres = QPushButton("wykres")
+    #widgety
+        #wykres
+        Wykres = wykres.TestWindow()
+        npoints = 1000000
+        xdata = np.linspace(0., 10., npoints)
+        Wykres.add_data(xdata, np.sin(xdata))
+        Wykres.add_data(xdata, np.cos(xdata))
+        Wykres.set_title("Simple example with %d curves of %d points " \
+                     "(OpenGL Accelerated Series)" \
+                     % (Wykres.ncurves, npoints))
+        Wykres.setWindowTitle("Simple performance example")
+        Wykres.show()
+        Wykres.resize(500, 500)
+
         mapa = QPushButton("mapa")
-        pidy_dol = QPushButton("pidy_dol")
         kompas = QPushButton("kompas")
         up = QPushButton("W")
         down = QPushButton("S")
         left = QPushButton("A")
         right = QPushButton("D")
-        P1 = QPushButton("P")
-        I1 = QPushButton("I")
-        D1 = QPushButton("D")
-        P2 = QPushButton("P")
-        I2 = QPushButton("I")
-        D2 = QPushButton("D")
+        P1_disp = QLineEdit("P")
+        P1_add = QPushButton()
+        P1_sub = QPushButton()
+        I1_disp = QLineEdit("I")
+        I1_add = QPushButton()
+        I1_sub = QPushButton()
+        D1_disp = QLineEdit("D")
+        D1_add = QPushButton()
+        D1_sub = QPushButton()
+        P2_disp = QLineEdit("P")
+        P2_add = QPushButton()
+        P2_sub = QPushButton()
+        I2_disp = QLineEdit("I")
+        I2_add = QPushButton()
+        I2_sub = QPushButton()
+        D2_disp = QLineEdit("D")
+        D2_add = QPushButton()
+        D2_sub = QPushButton()
 
+    #P1
+        P1 = QVBoxLayout()
+        P1.addWidget(P1_add)
+        P1.addWidget(P1_disp)
+        P1.addWidget(P1_sub)
+
+    #I1
+        I1 = QVBoxLayout()
+        I1.addWidget(I1_add)
+        I1.addWidget(I1_disp)
+        I1.addWidget(I1_sub)
+
+    #D1
+        D1 = QVBoxLayout()
+        D1.addWidget(D1_add)
+        D1.addWidget(D1_disp)
+        D1.addWidget(D1_sub)
+
+    # P2
+        P2 = QVBoxLayout()
+        P2.addWidget(P2_add)
+        P2.addWidget(P2_disp)
+        P2.addWidget(P2_sub)
+
+    #I2
+        I2 = QVBoxLayout()
+        I2.addWidget(I2_add)
+        I2.addWidget(I2_disp)
+        I2.addWidget(I2_sub)
+
+    #D2
+        D2 = QVBoxLayout()
+        D2.addWidget(D2_add)
+        D2.addWidget(D2_disp)
+        D2.addWidget(D2_sub)
+
+    #strzalki
         strzalki_gora = QHBoxLayout()
         strzalki_gora.addSpacing(100)
         strzalki_gora.addWidget(up)
@@ -55,15 +102,16 @@ class Example(QWidget):
         strzalki.addLayout(strzalki_gora)
         strzalki.addLayout(strzalki_dol)
 
+    #pidy
         pidy_gora = QHBoxLayout()
-        pidy_gora.addWidget(P1)
-        pidy_gora.addWidget(I1)
-        pidy_gora.addWidget(D1)
+        pidy_gora.addLayout(P1)
+        pidy_gora.addLayout(I1)
+        pidy_gora.addLayout(D1)
 
         pidy_dol = QHBoxLayout()
-        pidy_dol.addWidget(P2)
-        pidy_dol.addWidget(I2)
-        pidy_dol.addWidget(D2)
+        pidy_dol.addLayout(P2)
+        pidy_dol.addLayout(I2)
+        pidy_dol.addLayout(D2)
 
         pidy = QVBoxLayout()
         pidy.addLayout(pidy_gora)
@@ -72,8 +120,9 @@ class Example(QWidget):
     #gorna linia aplikacji
         hbox1 = QHBoxLayout()
         #hbox1.addStretch(1)
-        hbox1.addWidget(wykres)
+        hbox1.addWidget(Wykres)
         hbox1.addWidget(mapa)
+
 
     #dolna linia aplikacji
         hbox2 = QHBoxLayout()
@@ -89,9 +138,10 @@ class Example(QWidget):
 
         self.setLayout(vbox)
 
-        self.setGeometry(300, 300, 300, 150)
+        self.setGeometry(300, 300, 300, 500)
         self.setWindowTitle('Telemetria Romka')
         self.show()
+
 
 
 if __name__ == '__main__':
